@@ -1,0 +1,24 @@
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Наименование</th>
+            <th>Единица измерения</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range .}}
+        <tr>
+            <td>{{.ID}}</td>
+            <td>{{.Name}}</td>
+            <td>{{.Unit}}</td>
+            <td><a href="/products/edit?id={{.ID}}">Редактировать</a></td>
+        </tr>
+        {{else}}
+        <tr>
+            <td colspan="4">Товары не найдены</td>
+        </tr>
+        {{end}}
+    </tbody>
+</table>

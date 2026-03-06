@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создать расходную накладную</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        nav { background: #333; color: #fff; padding: 1rem; }
+        nav ul { list-style: none; display: flex; gap: 2rem; }
+        nav a { color: #fff; text-decoration: none; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { margin-bottom: 1.5rem; }
+        form { display: flex; flex-direction: column; gap: 1rem; }
+        label { font-weight: bold; }
+        input, select { padding: 0.5rem; border: 1px solid #ddd; }
+        button { padding: 0.5rem 1rem; background: #333; color: #fff; border: none; cursor: pointer; }
+        button:hover { background: #555; }
+        .line-item { border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; }
+        #lines-container { margin-top: 1rem; }
+        .add-line { background: #666; margin-bottom: 1rem; }
+        .stock-info { font-size: 0.9em; color: #666; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/stock">Остатки</a></li>
+            <li><a href="/incoming">Приход</a></li>
+            <li><a href="/outgoing">Расход</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Создать расходную накладную</h1>
+        <div id="error-message" style="color: red; margin-bottom: 1rem; font-weight: bold;"></div>
+        <form hx-post="/outgoing/add" hx-swap="none" hx-target="#error-message">
+            <div>
+                <label for="number">Номер накладной:</label>
+                <input type="text" id="number" name="number" required>
+            </div>
+            <div>
+                <label for="date">Дата:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <div>
+                <label for="client_id">Клиент:</label>
+                <select id="client_id" name="client_id" required>
+                    <option value="">Выберите клиента</option>
+                    {{range .Clients}}
+                    <option value="{{.ID}}">{{.Name}}</option>
+                    {{end}}
+                </select>
+            </div>
+            
+            <h3>Товары</h3>
+            <button type="button" class="add-line" onclick="addLine()">Добавить строку</button>
+            <div id="lines-container"></div>
+            
+            <button type="submit">Сохранить накладную</button>
+        </form>
+    </div>
+    
+    <script>
+        let lineCount = 0;
+        const products = {{.Products}};
+        
+        function addLine() {
+            const container = document.getElementById('lines-container');
+            const lineDiv = document.createElement('div');
+            lineDiv.className = 'line-item';
+            lineDiv.innerHTML = `
+                <div>
+                    <label>Товар:</label>
+                    <select name="product_id" required>
+                        <option value="">Выберите товар</option>
+                        ${products.map(p => `<option value="${p.ID}">${p.Name} (${p.Unit}) - остаток: ${p.CurrentQty.toFixed(2)}</option>`).join('')}
+                    </select>
+                </div>
+                <div>
+                    <label>Количество:</label>
+                    <input type="number" name="quantity" step="0.01" min="0.01" required>
+                </div>
+                <div>
+                    <label>Цена продажи:</label>
+                    <input type="number" name="price" step="0.01" min="0.01" required>
+                </div>
+            `;
+            container.appendChild(lineDiv);
+            lineCount++;
+        }
+        
+        addLine();
+    </script>
+</body>
+</html>

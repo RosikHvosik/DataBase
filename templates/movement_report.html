@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ведомость движения товара</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        nav { background: #333; color: #fff; padding: 1rem; }
+        nav ul { list-style: none; display: flex; gap: 2rem; }
+        nav a { color: #fff; text-decoration: none; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { margin-bottom: 1rem; }
+        .report-info { margin-bottom: 1.5rem; color: #666; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #f4f4f4; }
+        .income { color: green; }
+        .expense { color: red; }
+        .actions { margin-bottom: 1rem; }
+        a.btn { padding: 0.5rem 1rem; background: #333; color: #fff; text-decoration: none; display: inline-block; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/products">Товары</a></li>
+            <li><a href="/suppliers">Поставщики</a></li>
+            <li><a href="/clients">Клиенты</a></li>
+            <li><a href="/stock">Остатки</a></li>
+            <li><a href="/incoming">Приход</a></li>
+            <li><a href="/outgoing">Расход</a></li>
+            <li><a href="/reports/movement">Отчеты</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Ведомость движения товара</h1>
+        <div class="report-info">
+            <p>Товар: {{.ProductName}}</p>
+            <p>Период: {{.DateFrom}} - {{.DateTo}}</p>
+        </div>
+        <div class="actions">
+            <a href="/reports/movement" class="btn">Новый отчет</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Тип операции</th>
+                    <th>Номер накладной</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Контрагент</th>
+                    <th>Остаток после операции</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Movements}}
+                <tr>
+                    <td>{{.Date.Format "02.01.2006"}}</td>
+                    <td>{{.Type}}</td>
+                    <td>{{.InvoiceNum}}</td>
+                    <td class="{{if gt .Quantity 0.0}}income{{else}}expense{{end}}">
+                        {{if gt .Quantity 0.0}}+{{end}}{{printf "%.2f" .Quantity}}
+                    </td>
+                    <td>{{printf "%.2f" .Price}}</td>
+                    <td>{{.Counterpart}}</td>
+                    <td>{{printf "%.2f" .Balance}}</td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="7">Движения не найдены за указанный период</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

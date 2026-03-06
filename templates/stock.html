@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Остатки на складе</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        nav { background: #333; color: #fff; padding: 1rem; }
+        nav ul { list-style: none; display: flex; gap: 2rem; }
+        nav a { color: #fff; text-decoration: none; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { margin-bottom: 1.5rem; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #f4f4f4; }
+        .low-stock { background: #ffe6e6; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/stock">Остатки</a></li>
+            <li><a href="/incoming">Приход</a></li>
+            <li><a href="/outgoing">Расход</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Остатки на складе</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Наименование</th>
+                    <th>Единица измерения</th>
+                    <th>Текущий остаток</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .}}
+                <tr {{if lt .CurrentQty 100.0}}class="low-stock"{{end}}>
+                    <td>{{.ID}}</td>
+                    <td>{{.Name}}</td>
+                    <td>{{.Unit}}</td>
+                    <td>{{printf "%.2f" .CurrentQty}}</td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="4">Товары не найдены</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

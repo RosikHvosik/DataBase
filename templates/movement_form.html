@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчет о движении товара</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        nav { background: #333; color: #fff; padding: 1rem; }
+        nav ul { list-style: none; display: flex; gap: 2rem; }
+        nav a { color: #fff; text-decoration: none; }
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { margin-bottom: 1.5rem; }
+        form { display: flex; flex-direction: column; gap: 1rem; }
+        label { font-weight: bold; }
+        input, select { padding: 0.5rem; border: 1px solid #ddd; }
+        button { padding: 0.5rem 1rem; background: #333; color: #fff; border: none; cursor: pointer; }
+        button:hover { background: #555; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/products">Товары</a></li>
+            <li><a href="/suppliers">Поставщики</a></li>
+            <li><a href="/clients">Клиенты</a></li>
+            <li><a href="/stock">Остатки</a></li>
+            <li><a href="/incoming">Приход</a></li>
+            <li><a href="/outgoing">Расход</a></li>
+            <li><a href="/reports/movement">Отчеты</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Отчет о движении товара</h1>
+        <form method="GET" action="/reports/movement">
+            <div>
+                <label for="product_id">Товар:</label>
+                <select id="product_id" name="product_id" required>
+                    <option value="">Выберите товар</option>
+                    {{range .}}
+                    <option value="{{.ID}}">{{.Name}}</option>
+                    {{end}}
+                </select>
+            </div>
+            <div>
+                <label for="date_from">Дата с:</label>
+                <input type="date" id="date_from" name="date_from" required>
+            </div>
+            <div>
+                <label for="date_to">Дата по:</label>
+                <input type="date" id="date_to" name="date_to" required>
+            </div>
+            <button type="submit">Сформировать отчет</button>
+        </form>
+    </div>
+</body>
+</html>

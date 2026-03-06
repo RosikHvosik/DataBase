@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Товары</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        nav { background: #333; color: #fff; padding: 1rem; }
+        nav ul { list-style: none; display: flex; gap: 2rem; }
+        nav a { color: #fff; text-decoration: none; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { margin-bottom: 1.5rem; }
+        .actions { margin-bottom: 1rem; display: flex; gap: 1rem; align-items: center; }
+        input[type="text"] { padding: 0.5rem; border: 1px solid #ddd; flex: 1; max-width: 300px; }
+        button, a.btn { padding: 0.5rem 1rem; background: #333; color: #fff; border: none; cursor: pointer; text-decoration: none; display: inline-block; }
+        button:hover, a.btn:hover { background: #555; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/products">Товары</a></li>
+            <li><a href="/suppliers">Поставщики</a></li>
+            <li><a href="/clients">Клиенты</a></li>
+            <li><a href="/stock">Остатки</a></li>
+            <li><a href="/incoming">Приход</a></li>
+            <li><a href="/outgoing">Расход</a></li>
+            <li><a href="/reports/movement">Отчеты</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Товары</h1>
+        <div class="actions">
+            <input type="text" name="search" placeholder="Поиск товара..." 
+                   hx-get="/products/search" 
+                   hx-trigger="keyup changed delay:300ms" 
+                   hx-target="#products-list">
+            <a href="/products/add" class="btn">Добавить товар</a>
+        </div>
+        <div id="products-list">
+            {{template "products_list.html" .}}
+        </div>
+    </div>
+</body>
+</html>

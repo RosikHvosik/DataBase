@@ -1,0 +1,26 @@
+<td colspan="4">
+    <table style="width: 100%; margin: 1rem 0;">
+        <thead>
+            <tr style="background: #e8e8e8;">
+                <th>Товар</th>
+                <th>Количество</th>
+                <th>Цена продажи</th>
+                <th>Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .}}
+            <tr>
+                <td>{{.Product}}</td>
+                <td>{{printf "%.2f" .Quantity}}</td>
+                <td>{{printf "%.2f" .Price}}</td>
+                <td>{{printf "%.2f" .Total}}</td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="4">Строки не найдены</td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+</td>

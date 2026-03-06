@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить поставщика</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        nav { background: #333; color: #fff; padding: 1rem; }
+        nav ul { list-style: none; display: flex; gap: 2rem; }
+        nav a { color: #fff; text-decoration: none; }
+        .container { max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { margin-bottom: 1.5rem; }
+        form { display: flex; flex-direction: column; gap: 1rem; }
+        label { font-weight: bold; }
+        input { padding: 0.5rem; border: 1px solid #ddd; }
+        button { padding: 0.5rem 1rem; background: #333; color: #fff; border: none; cursor: pointer; }
+        button:hover { background: #555; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/products">Товары</a></li>
+            <li><a href="/suppliers">Поставщики</a></li>
+            <li><a href="/clients">Клиенты</a></li>
+            <li><a href="/stock">Остатки</a></li>
+            <li><a href="/incoming">Приход</a></li>
+            <li><a href="/outgoing">Расход</a></li>
+            <li><a href="/reports/movement">Отчеты</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Добавить поставщика</h1>
+        <div id="error-message" style="color: red; margin-bottom: 1rem;"></div>
+        <form hx-post="/suppliers/add" hx-swap="none" hx-target="#error-message">
+            <div>
+                <label for="name">Наименование организации:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="phone">Телефон:</label>
+                <input type="text" id="phone" name="phone" placeholder="+7XXXXXXXXXX" required>
+            </div>
+            <div>
+                <label for="bank_account">Расчетный счет:</label>
+                <input type="text" id="bank_account" name="bank_account" maxlength="20" required>
+            </div>
+            <button type="submit">Сохранить</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приходные накладные</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        nav { background: #333; color: #fff; padding: 1rem; }
+        nav ul { list-style: none; display: flex; gap: 2rem; }
+        nav a { color: #fff; text-decoration: none; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { margin-bottom: 1.5rem; }
+        .actions { margin-bottom: 1rem; }
+        a.btn { padding: 0.5rem 1rem; background: #333; color: #fff; text-decoration: none; display: inline-block; }
+        a.btn:hover { background: #555; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #f4f4f4; }
+        .view-link { color: #333; text-decoration: underline; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/stock">Остатки</a></li>
+            <li><a href="/incoming">Приход</a></li>
+            <li><a href="/outgoing">Расход</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Приходные накладные</h1>
+        <div class="actions">
+            <a href="/incoming/add" class="btn">Создать приходную накладную</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Дата</th>
+                    <th>Поставщик</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .}}
+                <tr>
+                    <td>{{.Number}}</td>
+                    <td>{{.Date.Format "02.01.2006"}}</td>
+                    <td>{{.Supplier}}</td>
+                    <td>
+                        <span class="view-link" 
+                              hx-get="/incoming/lines?id={{.ID}}" 
+                              hx-target="#lines-{{.ID}}" 
+                              hx-swap="innerHTML"
+                              id="toggle-{{.ID}}"
+                              onclick="toggleLines({{.ID}})">
+                            Показать строки
+                        </span>
+                    </td>
+                </tr>
+                <tr id="lines-{{.ID}}"></tr>
+                {{else}}
+                <tr>
+                    <td colspan="4">Накладные не найдены</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const expandedRows = new Set();
+        
+        function toggleLines(id) {
+            const linesRow = document.getElementById('lines-' + id);
+            const toggleBtn = document.getElementById('toggle-' + id);
+            
+            if (expandedRows.has(id)) {
+                linesRow.innerHTML = '';
+                toggleBtn.textContent = 'Показать строки';
+                expandedRows.delete(id);
+                toggleBtn.setAttribute('hx-get', '/incoming/lines?id=' + id);
+            } else {
+                expandedRows.add(id);
+                if (linesRow.innerHTML.trim() === '') {
+                    return;
+                }
+                toggleBtn.textContent = 'Скрыть строки';
+                toggleBtn.removeAttribute('hx-get');
+            }
+        }
+        
+        document.body.addEventListener('htmx:afterSwap', function(event) {
+            if (event.detail.target.id.startsWith('lines-')) {
+                const id = parseInt(event.detail.target.id.replace('lines-', ''));
+                const toggleBtn = document.getElementById('toggle-' + id);
+                if (toggleBtn && event.detail.target.innerHTML.trim() !== '') {
+                    toggleBtn.textContent = 'Скрыть строки';
+                    toggleBtn.removeAttribute('hx-get');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

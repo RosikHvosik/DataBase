@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менеджер</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        nav { background: #333; color: #fff; padding: 1rem; }
+        nav ul { list-style: none; display: flex; gap: 2rem; align-items: center; }
+        nav a { color: #fff; text-decoration: none; }
+        nav a:hover { text-decoration: underline; }
+        .role { margin-left: auto; font-weight: bold; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { margin-bottom: 1.5rem; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+        .menu-card { border: 1px solid #ddd; padding: 1.5rem; cursor: pointer; transition: all 0.3s; }
+        .menu-card:hover { border-color: #333; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .menu-card h2 { margin-bottom: 0.5rem; font-size: 1.2rem; }
+        .menu-card p { color: #666; font-size: 0.9rem; }
+        a { text-decoration: none; color: inherit; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/products">Товары</a></li>
+            <li><a href="/suppliers">Поставщики</a></li>
+            <li><a href="/clients">Клиенты</a></li>
+            <li><a href="/stock">Остатки</a></li>
+            <li><a href="/incoming">Приход</a></li>
+            <li><a href="/outgoing">Расход</a></li>
+            <li><a href="/reports/movement">Отчеты</a></li>
+            <li class="role">Роль: Менеджер</li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Рабочее место менеджера</h1>
+        <div style="margin-bottom: 2rem; padding: 1rem; border: 1px solid #ddd; background: #f9f9f9;">
+            <h3 style="margin-bottom: 1rem;">Управление данными</h3>
+            <div style="display: flex; gap: 1rem;">
+                <button hx-post="/admin/generate" 
+                        hx-confirm="Сгенерировать тестовые данные (по 100 записей в каждой таблице)?"
+                        style="padding: 0.5rem 1rem; background: #4CAF50; color: #fff; border: none; cursor: pointer;">
+                    Сгенерировать данные
+                </button>
+                <button hx-post="/admin/clear" 
+                        hx-confirm="Вы уверены? Все данные будут удалены!"
+                        style="padding: 0.5rem 1rem; background: #f44336; color: #fff; border: none; cursor: pointer;">
+                    Очистить базу данных
+                </button>
+            </div>
+        </div>
+        <div class="menu-grid">
+            <a href="/products">
+                <div class="menu-card">
+                    <h2>Товары</h2>
+                    <p>Управление справочником товаров</p>
+                </div>
+            </a>
+            <a href="/suppliers">
+                <div class="menu-card">
+                    <h2>Поставщики</h2>
+                    <p>Управление поставщиками</p>
+                </div>
+            </a>
+            <a href="/clients">
+                <div class="menu-card">
+                    <h2>Клиенты</h2>
+                    <p>Управление клиентами</p>
+                </div>
+            </a>
+            <a href="/stock">
+                <div class="menu-card">
+                    <h2>Остатки на складе</h2>
+                    <p>Текущие остатки товаров</p>
+                </div>
+            </a>
+            <a href="/incoming">
+                <div class="menu-card">
+                    <h2>Приходные накладные</h2>
+                    <p>Контроль поступлений</p>
+                </div>
+            </a>
+            <a href="/outgoing">
+                <div class="menu-card">
+                    <h2>Расходные накладные</h2>
+                    <p>Контроль отгрузок</p>
+                </div>
+            </a>
+            <a href="/reports/movement">
+                <div class="menu-card">
+                    <h2>Отчет о движении</h2>
+                    <p>Ведомость движения товара</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
