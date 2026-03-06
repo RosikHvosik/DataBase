@@ -1,0 +1,66 @@
+services: 
+  postgres: 
+    image: postgres:17-alpine
+    container_name: electroshop-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: electroshop
+      POSTGRES_USER: appuser
+      POSTGRES_PASSWORD: securepass123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appuser -d electroshop"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - electroshop-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: electroshop-app
+    restart: unless-stopped
+    ports:
+      - "8443:8443"
+    environment:
+      DATABASE_URL: "postgres://appuser:securepass123@postgres:5432/electroshop?sslmode=disable"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./templates:/app/templates:ro 
+    networks:
+      - electroshop-network
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: electroshop-pgadmin
+    restart: unless-stopped
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: secretpassword
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - electroshop-network
+    depends_on:
+      - postgres
+
+
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  electroshop-network:
+    driver: bridge
+    name: electroshop-network
+

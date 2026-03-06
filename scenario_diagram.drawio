@@ -1,0 +1,211 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 YaBrowser/25.12.0.0 Safari/537.36" version="29.3.4">
+  <diagram name="Граф сценариев" id="scenario-graph">
+    <mxGraphModel dx="2647" dy="1042" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="start" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=1" value="Вход в систему" vertex="1">
+          <mxGeometry height="70" width="140" x="520" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="role-choice" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;fontStyle=1" value="Выбор роли" vertex="1">
+          <mxGeometry height="120" width="120" x="530" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="edge1" edge="1" parent="1" source="start" target="role-choice">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="warehouse-role" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1" value="Кладовщик" vertex="1">
+          <mxGeometry height="60" width="140" x="200" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" edge="1" parent="1" source="role-choice" target="warehouse-role" value="Роль: Кладовщик">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="manager-role" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1" value="Менеджер" vertex="1">
+          <mxGeometry height="60" width="140" x="1090" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="edge3" edge="1" parent="1" source="role-choice" target="manager-role" value="Роль: Менеджер">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="view-stock" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Просмотр остатков" vertex="1">
+          <mxGeometry height="50" width="120" x="-180" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="edge4" edge="1" parent="1" source="warehouse-role" target="view-stock">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="create-incoming" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Создать приходную накладную" vertex="1">
+          <mxGeometry height="50" width="120" y="414" as="geometry" />
+        </mxCell>
+        <mxCell id="edge5" edge="1" parent="1" source="warehouse-role" target="create-incoming">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="create-outgoing" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Создать расходную накладную" vertex="1">
+          <mxGeometry height="50" width="120" x="180" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="edge6" edge="1" parent="1" source="warehouse-role" target="create-outgoing">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="view-invoices-w" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Просмотр накладных" vertex="1">
+          <mxGeometry height="50" width="120" x="460" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="edge7" edge="1" parent="1" source="warehouse-role" target="view-invoices-w">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="incoming-details" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Выбор поставщика" vertex="1">
+          <mxGeometry height="40" width="100" x="-120" y="525" as="geometry" />
+        </mxCell>
+        <mxCell id="edge8" edge="1" parent="1" source="create-incoming" target="incoming-details">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="incoming-add-lines" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Добавление товаров" vertex="1">
+          <mxGeometry height="40" width="100" x="30" y="525" as="geometry" />
+        </mxCell>
+        <mxCell id="edge9" edge="1" parent="1" source="incoming-details" target="incoming-add-lines">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="incoming-save" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Сохранение (обновление остатков)" vertex="1">
+          <mxGeometry height="50" width="120" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="edge10" edge="1" parent="1" source="incoming-add-lines" target="incoming-save">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="outgoing-details" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Выбор клиента" vertex="1">
+          <mxGeometry height="40" width="100" x="170" y="525" as="geometry" />
+        </mxCell>
+        <mxCell id="edge11" edge="1" parent="1" source="create-outgoing" target="outgoing-details">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="outgoing-add-lines" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Добавление товаров (проверка остатков)" vertex="1">
+          <mxGeometry height="50" width="120" x="290" y="525" as="geometry" />
+        </mxCell>
+        <mxCell id="edge12" edge="1" parent="1" source="outgoing-details" target="outgoing-add-lines">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="outgoing-save" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Сохранение (уменьшение остатков)" vertex="1">
+          <mxGeometry height="50" width="120" x="250" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="edge13" edge="1" parent="1" source="outgoing-add-lines" target="outgoing-save">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="view-lines" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Показать/скрыть строки накладной" vertex="1">
+          <mxGeometry height="50" width="120" x="430" y="525" as="geometry" />
+        </mxCell>
+        <mxCell id="edge14" edge="1" parent="1" source="view-invoices-w" target="view-lines">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="manage-products" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Управление товарами" vertex="1">
+          <mxGeometry height="50" width="120" x="640" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="edge15" edge="1" parent="1" source="manager-role" target="manage-products">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="manage-suppliers" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Управление поставщиками" vertex="1">
+          <mxGeometry height="50" width="120" x="1035" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="edge16" edge="1" parent="1" source="manager-role" target="manage-suppliers">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="manage-clients" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Управление клиентами" vertex="1">
+          <mxGeometry height="50" width="120" x="1190" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="edge17" edge="1" parent="1" source="manager-role" target="manage-clients">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="view-reports" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Формирование отчетов" vertex="1">
+          <mxGeometry height="50" width="120" x="1350" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="edge18" edge="1" parent="1" source="manager-role" target="view-reports">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="admin-functions" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Административные функции" vertex="1">
+          <mxGeometry height="50" width="120" x="830" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="edge19" edge="1" parent="1" source="manager-role" target="admin-functions">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="add-product" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Добавить товар" vertex="1">
+          <mxGeometry height="40" width="90" x="570" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="edge20" edge="1" parent="1" source="manage-products" target="add-product">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edit-product" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Редактировать товар" vertex="1">
+          <mxGeometry height="40" width="90" x="680" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="edge21" edge="1" parent="1" source="manage-products" target="edit-product">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="add-supplier" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Добавить поставщика" vertex="1">
+          <mxGeometry height="40" width="90" x="930" y="515" as="geometry" />
+        </mxCell>
+        <mxCell id="edge22" edge="1" parent="1" source="manage-suppliers" target="add-supplier">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edit-supplier" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Редактировать поставщика" vertex="1">
+          <mxGeometry height="40" width="90" x="1040" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="edge23" edge="1" parent="1" source="manage-suppliers" target="edit-supplier">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="add-client" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Добавить клиента" vertex="1">
+          <mxGeometry height="40" width="90" x="1260" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="edge24" edge="1" parent="1" source="manage-clients" target="add-client">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edit-client" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Редактировать клиента" vertex="1">
+          <mxGeometry height="40" width="90" x="1150" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="edge25" edge="1" parent="1" source="manage-clients" target="edit-client">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="movement-report" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Отчет о движении товара" vertex="1">
+          <mxGeometry height="50" width="100" x="1330" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="edge26" edge="1" parent="1" source="view-reports" target="movement-report">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="stock-report" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Просмотр остатков" vertex="1">
+          <mxGeometry height="50" width="100" x="1490" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="edge27" edge="1" parent="1" source="view-reports" target="stock-report">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="generate-data" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Сгенерировать тестовые данные" vertex="1">
+          <mxGeometry height="50" width="100" x="770" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="edge28" edge="1" parent="1" source="admin-functions" target="generate-data">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="clear-db" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Очистить базу данных" vertex="1">
+          <mxGeometry height="50" width="100" x="880" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="edge29" edge="1" parent="1" source="admin-functions" target="clear-db">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1" value="Легенда:" vertex="1">
+          <mxGeometry height="30" width="80" x="40" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="legend1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Точка входа" vertex="1">
+          <mxGeometry height="40" width="100" x="40" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="legend2" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Выбор" vertex="1">
+          <mxGeometry height="40" width="80" x="160" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="legend3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Роль" vertex="1">
+          <mxGeometry height="40" width="100" x="260" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="legend4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="Действие кладовщика" vertex="1">
+          <mxGeometry height="40" width="120" x="380" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="legend5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Действие менеджера" vertex="1">
+          <mxGeometry height="40" width="120" x="520" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="legend6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Детализация" vertex="1">
+          <mxGeometry height="40" width="100" x="660" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="legend7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="Операция" vertex="1">
+          <mxGeometry height="40" width="100" x="780" y="750" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
